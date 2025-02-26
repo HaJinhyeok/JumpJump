@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         {
             // Game Over
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+            transform.parent = null;
         }
     }
 
@@ -92,6 +93,17 @@ public class PlayerController : MonoBehaviour
         {
             _isJumping = false;
             _animator.SetBool("isJump", false);
+            transform.parent = collision.transform;
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Floor"))
+        {
+            transform.parent = null;
+        }
+    }
+
+    // https://quickclid.tistory.com/1   참조!!! parent 바꿔 설정해줄때는 transform의 size가 서로 다르면 이상하게 출력되기도함
 }
